@@ -18,7 +18,10 @@ char *get_next_line(int fd)
         if(temp1 == NULL)
             return (NULL);
         if(ft_strchr(buffer, '\n') != NULL)
-            break; 
+        {
+            free(temp1);
+            break;
+        }
         ssize_t n = read(fd, temp1, BUFFER_SIZE);
         if(n < 0)
         {
@@ -32,6 +35,7 @@ char *get_next_line(int fd)
             {
                 char* string = ft_strdup(buffer);
                 free(buffer);
+                buffer = NULL;
                 return(string);
             }
             return (NULL);
@@ -42,7 +46,7 @@ char *get_next_line(int fd)
         free(old_buffer);
         free(temp1);
     }
-    int pos = ft_strnchr(buffer, '\n');
+    int pos = ft_strchr(buffer, '\n');
     char* old_buffer = buffer;
     char* string = ft_substr(buffer,0,pos+1);
     buffer = ft_substr(buffer,pos+1, ft_strlen(buffer));
