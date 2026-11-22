@@ -15,8 +15,10 @@ char *get_next_line(int fd)
     while(1)
     {
         char* temp1 = malloc(BUFFER_SIZE + 1);
+        if(temp1 == NULL)
+            return (NULL);
         if(ft_strchr(buffer, '\n') != NULL)
-            break;
+            break; 
         ssize_t n = read(fd, temp1, BUFFER_SIZE);
         if(n < 0)
         {
@@ -27,19 +29,23 @@ char *get_next_line(int fd)
         {
             free(temp1);
             if(buffer != NULL) //abcd\0 gibi bir durumsa buffer'ı boşaltmalıyız.
-                return(buffer);
+            {
+                char* string = ft_strdup(buffer);
+                free(buffer);
+                return(string);
+            }
             return (NULL);
         }
         temp1[n] = '\0';
-        char* old_buffer = ft_strdup(buffer);
+        char* old_buffer = buffer;
         buffer = ft_strjoin(old_buffer, temp1);
         free(old_buffer);
         free(temp1);
     }
     int pos = ft_strnchr(buffer, '\n');
+    char* old_buffer = buffer;
     char* string = ft_substr(buffer,0,pos+1);
-    char* backup = ft_substr(buffer,pos+1, ft_strlen(buffer));
-    buffer = ft_strdup(backup);
-    free(backup);
+    buffer = ft_substr(buffer,pos+1, ft_strlen(buffer));
+    free(old_buffer);
     return(string);
 }
