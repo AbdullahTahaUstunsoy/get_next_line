@@ -5,23 +5,26 @@
 char *get_next_line(int fd)
 {
     static char* buffer;
-    char* temp = malloc(BUFFER_SIZE + 1);
-    ssize_t n = read(fd, temp, BUFFER_SIZE);
-    if(n <= 0)
-        return NULL;
-    temp[BUFFER_SIZE] = '\0';
-    buffer = ft_strjoin(buffer,temp);
-    int pos = ft_strchr(buffer, '\n'); //while will be entegrated
-    if(pos == NULL)
+    char* temp1 = malloc(BUFFER_SIZE + 1);
+    while(ft_strnchr(buffer, '\n') == NULL)
     {
-        int pos2 = ft_strchr(buffer, '\0');
-        if(pos2 != NULL)
+        ssize_t n = read(fd, temp1, BUFFER_SIZE);
+        if(n < 0)
+        {
+            free(temp1);
+            return NULL;
+        }
+        else if(n == 0)
             return (NULL);
+        temp1[n] = '\0';
+        char* old_buffer = ft_strdup(buffer);
+        buffer = ft_strjoin(old_buffer, temp1);
+        free(old_buffer);
     }
+    int pos = ft_strnchr(buffer, '\n');
     char* string = ft_substr(buffer,0,pos+1);
     char* backup = ft_substr(buffer,pos+1, ft_strlen(buffer));
-    char* temp2 = buffer;
-    buffer = backup;
-    free(temp2);
+    buffer = ft_strdup(backup);
+    free(backup);
     return(string);
 }
