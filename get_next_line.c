@@ -4,8 +4,10 @@
 
 
 /*
-    bazı sorunlar
-    
+    bazı sorular/sorunlar
+
+    ft_strjoin'e null gidebilir mi ?
+
 */
 char *get_next_line(int fd)
 {
@@ -31,6 +33,8 @@ char *get_next_line(int fd)
         free(temp1);
     }
     int pos = ft_strnchr(buffer, '\n');
+    if(pos == NULL) //son kısım kaldı demek, efgh'\0' gibi
+        return (buffer);
     char* string = ft_substr(buffer,0,pos+1);
     char* backup = ft_substr(buffer,pos+1, ft_strlen(buffer));
     buffer = ft_strdup(backup);
