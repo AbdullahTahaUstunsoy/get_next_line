@@ -1,16 +1,9 @@
 #include "get_next_line.h"
 
-//strjoin, substr, strchr, ft_strlen,
-
-
-/*
-    bazı sorular/sorunlar
-
-    ft_strjoin'e null gidebilir mi ?
-
-*/
 char *get_next_line(int fd)
 {
+    if(fd<0 || BUFFER_SIZE <=0)
+        return NULL;
     static char* buffer;
     while(1)
     {
@@ -26,6 +19,8 @@ char *get_next_line(int fd)
         if(n < 0)
         {
             free(temp1);
+            free(buffer);
+            buffer = NULL;
             return NULL;
         }
         else if(n == 0)
@@ -39,12 +34,11 @@ char *get_next_line(int fd)
             }
             else if(buffer != NULL)
             {
-                char* string = ft_strdup(buffer);
-                free(buffer);
+                char* old_buffer = buffer;
                 buffer = NULL;
-                return(string);
+                return(old_buffer);
             }
-            return (NULL);
+            return (NULL); //son satır döndükten sonra tekrar çağrı olursa
         }
         temp1[n] = '\0';
         char* old_buffer = buffer;
