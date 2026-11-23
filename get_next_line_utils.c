@@ -12,18 +12,23 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void join_operation(size_t* length1, size_t* length2, char* ptr, char const* s1, char const* s2)
+void join_operation(char* ptr, char const* s1, char const* s2)
 {
+	size_t  length1;
+	size_t  length2;
 	size_t i;
 	size_t j;
+
+	length1 = ft_strlen(s1);
+	length2 = ft_strlen(s2);
 	i = 0;
-	while (i < *length1)
+	while (i < length1)
 	{
 		ptr[i] = s1[i];
 		(i)++;
 	}
 	j = 0;
-	while (j < *length2)
+	while (j < length2)
 	{
 		ptr[i + j] = s2[j];
 		j++;
@@ -46,7 +51,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 			* length2 + 1);
 	if (ptr == NULL)
 		return (NULL);
-	join_operation(&length1, &length2, ptr, s1, s2);
+	join_operation(ptr, s1, s2);
 	return (ptr);
 }
 
