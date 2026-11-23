@@ -17,7 +17,7 @@ char *get_next_line(int fd)
         char* temp1 = malloc(BUFFER_SIZE + 1);
         if(temp1 == NULL)
             return (NULL);
-        if(ft_strchr(buffer, '\n') != NULL)
+        if(ft_strchr(buffer, '\n') != NULL) // buffer'da \n varsa ekstra okumaya yapmaya gerek yok önce bufferdakini çıkartalım
         {
             free(temp1);
             break;
@@ -31,7 +31,13 @@ char *get_next_line(int fd)
         else if(n == 0)
         {
             free(temp1);
-            if(buffer != NULL) //abcd\0 gibi bir durumsa buffer'ı boşaltmalıyız.
+            if(buffer != NULL && buffer[0] == '\0') //abc\n gibi bir durumda return NULL olması için.
+            {
+                free(buffer);
+                buffer = NULL;
+                return NULL;
+            }
+            else if(buffer != NULL)
             {
                 char* string = ft_strdup(buffer);
                 free(buffer);
@@ -46,7 +52,7 @@ char *get_next_line(int fd)
         free(old_buffer);
         free(temp1);
     }
-    char* pos = ft_strchr(buffer, '\n'); //abcd\nefgh\0
+    char* pos = ft_strchr(buffer, '\n');
     char* old_buffer = buffer;
     char* string = ft_substr(buffer,0, (pos-buffer)+1);
     buffer = ft_substr(buffer, (pos-buffer)+1, ft_strlen(buffer)-(pos-buffer)-1);
