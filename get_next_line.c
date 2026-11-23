@@ -46,10 +46,10 @@ char *get_next_line(int fd)
         free(old_buffer);
         free(temp1);
     }
-    int pos = ft_strchr(buffer, '\n');
+    char* pos = ft_strchr(buffer, '\n'); //abcd\nefgh\0
     char* old_buffer = buffer;
-    char* string = ft_substr(buffer,0,pos+1);
-    buffer = ft_substr(buffer,pos+1, ft_strlen(buffer));
+    char* string = ft_substr(buffer,0, (pos-buffer)+1);
+    buffer = ft_substr(buffer, (pos-buffer)+1, ft_strlen(buffer)-(pos-buffer)-1);
     free(old_buffer);
     return(string);
 }
