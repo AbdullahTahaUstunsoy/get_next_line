@@ -30,7 +30,19 @@ char    *return_line(char **buffer)
     char *pos = ft_strchr(*buffer, '\n');
     char *old_buffer = *buffer;
     char *line = ft_substr(*buffer,0, (pos- *buffer)+1);
+    if (line == NULL)
+    {
+        free(*buffer);
+        *buffer = NULL;
+        return (NULL);
+    }
     *buffer = ft_substr(*buffer, (pos-*buffer)+1, ft_strlen(*buffer)-(pos-*buffer)-1);
+    if(*buffer == NULL)
+    {
+        free(line);
+        free(old_buffer);
+        return (NULL);
+    }
     free(old_buffer);
     return(line);
 }
@@ -47,6 +59,7 @@ char *get_next_line(int fd)
         char *temp1 = malloc(BUFFER_SIZE + 1);
         if(temp1 == NULL)
         {
+            free(buffer);
             buffer = NULL;
             return (NULL);
         }
@@ -59,8 +72,7 @@ char *get_next_line(int fd)
         if (buffer == NULL)
         {
             free(temp1);
-            free(buffer);
-            buffer = NULL;
+            free(old_buffer);
             return (NULL);
         }
         free(old_buffer);
