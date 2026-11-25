@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-static char	*temp_control(char **temp1, char **buffer)
+static int	temp_control(char **temp1, char **buffer)
 {
 	*temp1 = malloc(BUFFER_SIZE + 1);
 	if (*temp1 == NULL)
@@ -39,7 +39,7 @@ static char	*read_control(ssize_t n, char *temp1, char **buffer)
 	return (NULL);
 }
 
-static char	*buffer_control(char *temp1, char **buffer, char *old_buffer)
+static int	buffer_control(char *temp1, char **buffer, char *old_buffer)
 {
 	if (*buffer == NULL)
 	{
