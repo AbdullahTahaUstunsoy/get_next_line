@@ -7,8 +7,9 @@ static char	*temp_control(char **temp1, char **buffer)
 	{
 		free(*buffer);
 		*buffer = NULL;
-		return (NULL);
+		return (1);
 	}
+	return (0);
 }
 
 static char	*read_control(ssize_t n, char *temp1, char **buffer)
@@ -44,8 +45,9 @@ static char	*buffer_control(char *temp1, char **buffer, char *old_buffer)
 	{
 		free(temp1);
 		free(old_buffer);
-		return (NULL);
+		return (1);
 	}
+	return (0);
 }
 
 static char	*return_line(char **buffer)
@@ -96,7 +98,7 @@ char	*get_next_line(int fd)
 		temp1[n] = '\0';
 		old_buffer = buffer;
 		buffer = ft_strjoin(old_buffer, temp1);
-		if (buffer_control(temp1, &buffer, old_buffer) == NULL)
+		if (buffer_control(temp1, &buffer, old_buffer))
 			return (NULL);
 		free(old_buffer);
 		free(temp1);
