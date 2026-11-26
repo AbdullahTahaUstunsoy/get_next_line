@@ -7,7 +7,18 @@ int main()
     char *line;
 
     int fd = open("fd3", O_RDONLY);
+    if (fd == -1)
+    {
+        printf("hata\n");
+        return 0;
+    }
     while((line = get_next_line(fd)))
+    {  
         printf("%s",line);
+        free (line);
+    }
+    if (line == NULL)
+        printf("null geldi\n");
+    close(fd);
     return (0);
 }
