@@ -6,14 +6,16 @@
 /*   By: austunso <austunso@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/26 20:51:04 by austunso          #+#    #+#             */
-/*   Updated: 2026/11/26 20:51:06 by austunso         ###   ########.fr       */
+/*   Updated: 2026/11/26 19:19:17 by austunso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	temp_control(char **temp1, char **buffer)
+static int	temp_control(char **temp1, char **buffer, int fd)
 {
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (1);
 	*temp1 = malloc(BUFFER_SIZE + 1);
 	if (*temp1 == NULL)
 	{
@@ -102,7 +104,7 @@ char	*get_next_line(int fd)
 	{
 		if (ft_strchr(buffer, '\n') != NULL)
 			break ;
-		if (temp_control(&temp1, &buffer))
+		if (temp_control(&temp1, &buffer, fd))
 			return (NULL);
 		n = read(fd, temp1, BUFFER_SIZE);
 		if (n <= 0)

@@ -18,7 +18,7 @@ int main()
         free (line);
     }
     if (line == NULL)
-        printf("null geldi\n");
+        printf("null geldi");
     close(fd);
     return (0);
 }

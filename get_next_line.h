@@ -6,7 +6,7 @@
 /*   By: austunso <austunso@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/26 20:50:50 by austunso          #+#    #+#             */
-/*   Updated: 2026/11/26 21:00:44 by austunso         ###   ########.fr       */
+/*   Updated: 2026/11/26 19:17:54 by austunso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE -241412431
 # endif
 
 # include <unistd.h>
