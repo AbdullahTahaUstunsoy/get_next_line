@@ -2,23 +2,32 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-int main()
+int	main(int argc, char **argv)
 {
-    char *line;
+	int		fd;
+	char	*line;
 
-    int fd = open("fd3", O_RDONLY);
-    if (fd == -1)
-    {
-        printf("hata\n");
-        return 0;
-    }
-    while((line = get_next_line(fd)))
-    {  
-        printf("%s",line);
-        free (line);
-    }
-    if (line == NULL)
-        printf("null geldi");
-    close(fd);
-    return (0);
+	fd = 0;
+	if (argc > 1)
+		fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		printf("file couldn't open\n");
+		return (1);
+	}
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	printf("\n-- null returned --\n");
+	line = get_next_line(fd);
+	if (line == NULL)
+		printf("-- call again: null (true) --\n");
+	free(line);
+	if (fd != 0)
+		close(fd);
+	return (0);
 }
